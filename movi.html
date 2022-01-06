@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    input {
+      width: 100%;
+      height: 30px;
+      border: 2px solid black;
+    }
+    #movies {
+      height: 200px;
+      width: 206px;
+      border: none;
+
+      overflow: auto;
+    }
+    .main {
+      border: 1px solid green;
+      width: 60%;
+      height: 30px;
+      margin: auto;
+    }
+    body {
+      background-image: url("https://images.unsplash.com/photo-1496629062893-b0f566065d44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+    }
+
+    h1 {
+      text-align: center;
+      color: #e50914;
+      font-size: 60px;
+      font-weight: bolder;
+      font-family: cursive;
+    }
+    #post {
+      display: flex;
+      justify-content: end;
+
+      align-items: center;
+      border: 1px solid transparent;
+      width: 200px;
+      height: 150px;
+      margin-left: 750px;
+      margin-top: 230px;
+    }
+    img {
+      width: 100%;
+      height: 270px;
+    }
+  </style>
+  <body>
+    <h1>NETFLIX</h1>
+    <div class="main">
+      <input
+        oninput="throttleFunction(searchMovies,1000)"
+        type="text"
+        id="query"
+      />
+
+      <div id="movies"></div>
+    </div>
+    <div id="post">
+      <div id="mov"></div>
+    </div>
+  </body>
+</html>
+<script>
+  var timerId;
+
+  let movies_div = document.getElementById("movies");
+  let movi = document.getElementById("mov");
+
+  async function searchMovies() {
+    let ip = document.getElementById("query").value;
+
+    let response = await fetch(
+      `https://www.omdbapi.com/?s=${ip}&apikey=d806bd70`
+    );
+
+    let data = await response.json();
+
+    let appdata = data.Search;
+    console.log(appdata);
+
+    appendMovies(appdata);
+  }
+
+  function appendMovies(m) {
+    m.forEach((el) => {
+      let p = document.createElement("p");
+
+      p.innerText = el.Title;
+
+      p.addEventListener("click", function () {
+        movi.textContent = "";
+        var img = document.createElement("img");
+        img.src = el.Poster;
+        var year = document.createElement("p");
+        year.textContent = "Year : " + el.Year;
+
+        var title = document.createElement("p");
+        title.textContent = "Title : " + el.Title;
+
+        var type = document.createElement("p");
+        type.textContent = "Type : " + el.Type;
+
+        var imdbID = document.createElement("p");
+        imdbID.textContent = "imdbID : " + el.imdbID;
+
+        movi.append(img, title, type, year, imdbID);
+      });
+
+      movies_div.append(p);
+    });
+  }
+
+  function throttleFunction(func, delay) {
+    // If setTimeout is already scheduled, no need to do anything
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    // Schedule a setTimeout after delay seconds
+    timerId = setTimeout(function () {
+      func();
+    }, delay);
+  }
+</script>

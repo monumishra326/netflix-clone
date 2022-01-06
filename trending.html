@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #movies {
+        display: flex;
+        height: 100px;
+        width: 100%;
+        margin: 30px;
+      }
+
+      #sortingbox {
+        width: 300px;
+        height: 300px;
+      }
+
+      #sortingbox > div {
+        margin: 30px;
+        font-size: large;
+        font-weight: lighter;
+      }
+
+      #sortingbox select {
+        width: 200px;
+        height: 40px;
+        text-align: center;
+      }
+
+      #sortingbox button {
+        width: 200px;
+        height: 40px;
+        text-align: center;
+        margin-left: 40px;
+        border-radius: 50px;
+        border: transparent;
+      }
+
+      #box {
+        width: 1100px;
+        height: 100vh;
+        display: grid;
+        grid-gap: 30px;
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      #box > div {
+        box-shadow: rgba(226, 50, 50, 0.25) 0px 54px 55px,
+          rgba(192, 59, 59, 0.12) 0px -12px 30px,
+          rgba(184, 10, 10, 0.12) 0px 4px 6px,
+          rgba(165, 41, 41, 0.17) 0px 12px 13px,
+          rgba(133, 32, 32, 0.09) 0px -3px 5px;
+        border-radius: 10px;
+      }
+
+      #box > div > div:first-child {
+        width: 100%;
+        height: 60%;
+      }
+
+      .middle {
+        border: 3px solid green;
+        width: 50px;
+        height: 50px;
+
+        border-radius: 50px;
+        position: relative;
+        margin-left: 15px;
+        text-align: center;
+        color: white;
+        background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #box p {
+        margin-left: 10px;
+      }
+
+      #box img {
+        width: 100%;
+        height: 110%;
+      }
+      h1 {
+        text-align: center;
+        border: 1px solid transparent;
+        width: 20%;
+        height: 50px;
+        margin: auto;
+        background-image: linear-gradient(rgb(37, 192, 71), rgb(143, 23, 23));
+        border-radius: 10px;
+      }
+      body {
+        background-image: url("https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bW92aWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Popular Movies</h1>
+    <div id="movies">
+      <div id="sortingbox">
+        <div>
+          <select>
+            <option>Sort</option>
+          </select>
+        </div>
+        <div>
+          <select>
+            <option>Filter</option>
+          </select>
+        </div>
+        <div>
+          <select>
+            <option>Where To Watcht</option>
+          </select>
+        </div>
+
+        <button type="submit">Search</button>
+      </div>
+      <div id="box">
+        <div>
+          <div>img</div>
+          <div class="middle"></div>
+          <div>
+            <p>Spider-Man: No Way Home</p>
+            <p>Dec 15, 2021</p>
+          </div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+        <div>
+          <div>img</div>
+          <div>home</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  async function getmoviesdata() {
+    let url = await fetch(
+      "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=d18776c49da476f65f821a55bb5ed719"
+    );
+
+    let y = await url.json();
+    y = y.results;
+    console.log(y);
+
+    displaymovies(y);
+  }
+  getmoviesdata();
+
+  function displaymovies(array) {
+    document.querySelector("#box").innerHTML = "";
+
+    array.map(function (n) {
+      var div = document.createElement("div");
+      var imgdiv = document.createElement("div");
+
+      var img = document.createElement("img");
+      img.src = `https://www.themoviedb.org/t/p/w220_and_h330_face/${n.poster_path}`;
+      imgdiv.append(img);
+
+      var contextdiv = document.createElement("div");
+
+      var content = document.createElement("p");
+
+      content.textContent = n.title;
+
+      var month = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+
+      var date = document.createElement("p");
+      var [m, t] = n.release_date.split("-");
+      console.log(t);
+
+      n.release_date[5] = month[t - 1];
+      console.log(month[t - 1]);
+
+      for (var i = 0; i < n.release_date; i++) {
+        if (n.release_date[5]) {
+          n.release_date[5] == month[t - 1];
+        }
+      }
+
+      console.log(n.release_date[5], n.release_date[6]);
+      date.textContent = n.release_date;
+
+      contextdiv.append(content, date);
+
+      var middlebox = document.createElement("div");
+
+      middlebox.textContent = n.vote_average * 10 + " %";
+
+      middlebox.classList.add("middle");
+
+      div.append(imgdiv, middlebox, contextdiv);
+      document.querySelector("#box").append(div);
+    });
+  }
+</script>
